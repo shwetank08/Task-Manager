@@ -1,25 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import "bootstrap/dist/css/bootstrap.min.css";
+import React, { useState } from "react";
+import { AuthContext } from "./Context/AuthContext";
 
-function App() {
+import { initializeApp } from "firebase/app";
+import firebaseConfig from "./config/firebaseConfig";
+
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+
+import Signin from "./pages/signin";
+import Signup from "./pages/signup";
+import Home from "./pages/Home";
+import Header from "./pages/Header";
+
+initializeApp(firebaseConfig);
+const App = () => {
+  const [user, setUser] = useState(null);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <AuthContext.Provider value={{user, setUser}}>
+      <Header/>
+        <Routes>
+          <Route path="/u/signup" element={<Signup />} />
+          <Route path="/u/signin" element={<Signin />} />
+          <Route path="/u/home" element={<Home />} />
+        </Routes>
+      </AuthContext.Provider>
+    </BrowserRouter>
   );
-}
+};
 
 export default App;
