@@ -85,7 +85,7 @@ const Home = () => {
             }}
           />
         </Form.Group>
-        <Button variant="primary" type="submit" onClick={handleClick}>
+        <Button variant="dark" type="submit" onClick={handleClick}>
           Add Task
         </Button>
         <ListGroup className="mt-4">

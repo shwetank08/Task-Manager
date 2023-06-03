@@ -5,8 +5,10 @@ import Container from "react-bootstrap/Container";
 import Card from "react-bootstrap/Card";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { AuthContext } from "../Context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
+  const navigate = useNavigate();
   const context = useContext(AuthContext);
   const [user, setUser] = useState({
     email: "",
@@ -18,9 +20,12 @@ const Signup = () => {
     const auth = getAuth();
     createUserWithEmailAndPassword(auth, user.email, user.password)
       .then((userCredential) => {
-        context.setUser({email: userCredential.user.email, uid: userCredential.user.uid});
+        context.setUser({
+          email: userCredential.user.email,
+          uid: userCredential.user.uid,
+        });
+        navigate("/u/home");
         console.log(user);
-        
       })
       .catch((error) => {
         const errorCode = error.code;

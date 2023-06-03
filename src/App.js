@@ -11,18 +11,22 @@ import Signin from "./pages/signin";
 import Signup from "./pages/signup";
 import Home from "./pages/Home";
 import Header from "./pages/Header";
+import ProtectedRoute from "./util/ProtectedRoute";
+
 
 initializeApp(firebaseConfig);
 const App = () => {
   const [user, setUser] = useState(null);
   return (
     <BrowserRouter>
-      <AuthContext.Provider value={{user, setUser}}>
-      <Header/>
+      <AuthContext.Provider value={{ user, setUser }}>
+        <Header />
         <Routes>
           <Route path="/u/signup" element={<Signup />} />
           <Route path="/u/signin" element={<Signin />} />
-          <Route path="/u/home" element={<Home />} />
+          <Route element={<ProtectedRoute />}>
+            <Route path="/u/home" element={<Home />} />
+          </Route>
         </Routes>
       </AuthContext.Provider>
     </BrowserRouter>

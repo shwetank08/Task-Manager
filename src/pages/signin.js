@@ -7,8 +7,10 @@ import Card from "react-bootstrap/Card";
 import { AuthContext } from "../Context/AuthContext";
 
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
 const Signin = () => {
+  const navigate = useNavigate();
   const context = useContext(AuthContext);
   const [user, setUser] = useState({
     email: "",
@@ -21,7 +23,11 @@ const Signin = () => {
     const auth = getAuth();
     signInWithEmailAndPassword(auth, user.email, user.password)
       .then((userCredential) => {
-        context.setUser({email: userCredential.user.email, uid: userCredential.user.uid});
+        context.setUser({
+          email: userCredential.user.email,
+          uid: userCredential.user.uid,
+        });
+        navigate("/u/home");
       })
       .catch((error) => {
         const errorCode = error.code;
